@@ -36,6 +36,7 @@ jobs:
         touch version.txt
         date +%s >> version.txt
         mv ./version.txt ./target
+        cp docker/Dockerfile ./target
     - name: Export
       uses: actions/upload-artifact@v3
       with:
@@ -43,6 +44,7 @@ jobs:
         path: |
           target/*.jar
           target/version.txt
+          target/Dockerfile
   image:
     needs: [build]
     runs-on: ubuntu-latest
@@ -71,12 +73,10 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Prepaire Environment For Building Docker Image
+      - name: Prepare  Environment For Building Docker Image
         run: |
           pwd
           mkdir ops
-          cp docker/Dockerfile ops/
-          ls -la ops/
       - name: Download Artifacts
         uses: actions/download-artifact@v3
         with:
