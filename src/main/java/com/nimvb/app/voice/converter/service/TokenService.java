@@ -38,6 +38,6 @@ public class TokenService {
                 .build();
         JwsHeader jwsHeader = JwsHeader.with(MacAlgorithm.HS256).build();
         String    tokenValue = this.encoder.encode(JwtEncoderParameters.from(jwsHeader, claims)).getTokenValue();
-        return new JwtToken(tokenValue,expiresAt.getLong(ChronoField.MILLI_OF_SECOND));
+        return new JwtToken(tokenValue,expiresAt.toEpochMilli());
     }
 }
