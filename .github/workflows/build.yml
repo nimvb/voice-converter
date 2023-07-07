@@ -29,4 +29,18 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+    - name: Package with Maven
+      run: mvn package spring-boot:repackage -DskipTests
+    - name: Versioning
+      run: |
+        touch version.txt
+        date +%s >> version.txt
+        mv ./version.txt ./target
+    - name: Export artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: artifacts
+        path: |
+          target/*.jar
+          target/version.txt
       
