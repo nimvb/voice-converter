@@ -48,7 +48,7 @@ jobs:
   image:
     needs: [build]
     runs-on: ubuntu-latest
-    if: contains(fromJSON('["refs/heads/main","refs/tags/v*]'), github.ref)
+    if: contains(fromJSON('["refs/heads/main","refs/tags/v*"]'), github.ref)
     permissions: 
       contents: read
       packages: write
